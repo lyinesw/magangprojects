@@ -1,187 +1,194 @@
-function generatePDF() {
+// 1. Data form
 
-    let nomor, tgl, nama1, jabatan, status1, alamat1, nama2, alamat2, usaha, jenis, besaran_sewa;
-    let tbl_nama_perangkat, tbl_kib, tbl_kode_barang, tbl_nama_barang, tbl_reg, tbl_lokasi, tbl_luas, tbl_ket;
-    let nama1_out, nama2_out, jenis_out, jabatan_out, status1_out;
-    let hari, tanggal, bulan, tahun, terbilang, hariLower, bulanLower;
+let formData = {};
 
-    // ===== AMBIL DATA FORM =====
-    try {
-        console.log('Mengambil data form...');
-        
-        nomor = document.getElementById('nomor')?.value || '';
-        tgl = document.getElementById('tgl')?.value || new Date().toISOString().split('T')[0];
-        nama1 = document.getElementById('nama1')?.value || '';
-        jabatan = document.getElementById('jabatan')?.value || '';
-        status1 = document.getElementById('status1')?.value || '';
-        alamat1 = document.getElementById('alamat1')?.value || '';
-        nama2 = document.getElementById('nama2')?.value || '';
-        alamat2 = document.getElementById('alamat2')?.value || '';
-        usaha = document.getElementById('usaha')?.value || '';
-        jenis = document.getElementById('jenis')?.value || '';
-        besaran_sewa = parseInt(document.getElementById('besaran_sewa')?.value) || 0;
-        
-        tbl_nama_perangkat = document.getElementById('tbl_nama_perangkat')?.value || '';
-        tbl_kib = document.getElementById('tbl_kib')?.value || '';
-        tbl_kode_barang = document.getElementById('tbl_kode_barang')?.value || '';
-        tbl_nama_barang = document.getElementById('tbl_nama_barang')?.value || '';
-        tbl_reg = document.getElementById('tbl_reg')?.value || '';
-        tbl_lokasi = document.getElementById('tbl_lokasi')?.value || '';
-        tbl_luas = document.getElementById('tbl_luas')?.value || '';
-        tbl_ket = document.getElementById('tbl_ket')?.value || '';
-        
-        console.log('Data yang diambil:', {
-            nama1, nama2, usaha, jenis, besaran_sewa,
-            tbl_nama_perangkat
-        });
-    } catch (e) {
-        alert('ERROR: Gagal mengambil data form.\n' + e.message);
-        console.error('Form data error:', e);
-        return;
-    }
+// nama label untuk setiap input 
+const labelText = {
+    tgl: 'Tanggal Perjanjian',
+    usaha: 'Kegiatan Usaha',
+    nama1: 'Nama Pihak Kesatu',
+    jabatan: 'Jabatan Pihak Kesatu',
+    alamat1: 'Alamat Instansi Pihak Kesatu',
+    nama2: 'Nama Pihak Kedua',
+    alamat2: 'Alamat Pihak Kedua',
+    status1: 'Status Barang',
+    jenis: 'Jenis Barang',
+    besaran_sewa: 'Besaran Sewa',
+    tbl_nama_perangkat: 'Nama Perangkat',
+    tbl_kib: 'KIB',
+    tbl_kode_barang: 'Kode Barang',
+    tbl_nama_barang: 'Nama Barang',
+    tbl_reg: 'Reg',
+    tbl_lokasi: 'Lokasi',
+    tbl_luas: 'Luas (m²)',
+    tbl_ket: 'Keterangan'
+};
 
-    // ===== VALIDASI DATA =====
-    // validate required fields (all except "nomor")
-    const requiredIds = ['tgl','nama1','jabatan','status1','alamat1','nama2','alamat2','usaha','jenis','besaran_sewa','tbl_no','tbl_nama_perangkat','tbl_kib','tbl_kode_barang','tbl_nama_barang','tbl_reg','tbl_lokasi','tbl_luas','tbl_ket'];
-    const labels = {
-        tgl: 'Tanggal Perjanjian',
-        usaha: 'Kegiatan Usaha',
-        nama1: 'Nama Pihak Kesatu',
-        jabatan: 'Jabatan Pihak Kesatu',
-        alamat1: 'Alamat Instansi Pihak Kesatu',
-        nama2: 'Nama Pihak Kedua',
-        alamat2: 'Alamat Pihak Kedua',
-        status1: 'Status Barang',
-        jenis: 'Jenis Barang',
-        besaran_sewa: 'Besaran Sewa',
-        tbl_no: 'No.',
-        tbl_nama_perangkat: 'Nama Perangkat',
-        tbl_kib: 'KIB',
-        tbl_kode_barang: 'Kode Barang',
-        tbl_nama_barang: 'Nama Barang',
-        tbl_reg: 'Reg',
-        tbl_lokasi: 'Lokasi',
-        tbl_luas: 'Luas (m²)',
-        tbl_ket: 'Ket.'
+// 2. Fungsi ambil data dari form
+
+function DataForm() {
+      return {
+        nomor: document.getElementById('nomor') ? document.getElementById('nomor').value : '',
+        tgl: document.getElementById('tgl') ? document.getElementById('tgl').value : '',
+        nama1: document.getElementById('nama1') ? document.getElementById('nama1').value : '',
+        jabatan: document.getElementById('jabatan') ? document.getElementById('jabatan').value : '',
+        status1: document.getElementById('status1') ? document.getElementById('status1').value : '',
+        alamat1: document.getElementById('alamat1') ? document.getElementById('alamat1').value : '',
+        nama2: document.getElementById('nama2') ? document.getElementById('nama2').value : '',
+        alamat2: document.getElementById('alamat2') ? document.getElementById('alamat2').value : '',
+        usaha: document.getElementById('usaha') ? document.getElementById('usaha').value : '',
+        jenis: document.getElementById('jenis') ? document.getElementById('jenis').value : '',
+        besaran_sewa: document.getElementById('besaran_sewa') ? document.getElementById('besaran_sewa').value : '',
+        tbl_nama_perangkat: document.getElementById('tbl_nama_perangkat') ? document.getElementById('tbl_nama_perangkat').value : '',
+        tbl_kib: document.getElementById('tbl_kib') ? document.getElementById('tbl_kib').value.toUpperCase() : '',
+        tbl_kode_barang: document.getElementById('tbl_kode_barang') ? document.getElementById('tbl_kode_barang').value : '',
+        tbl_nama_barang: document.getElementById('tbl_nama_barang') ? document.getElementById('tbl_nama_barang').value : '',
+        tbl_reg: document.getElementById('tbl_reg') ? document.getElementById('tbl_reg').value : '',
+        tbl_lokasi: document.getElementById('tbl_lokasi') ? document.getElementById('tbl_lokasi').value : '',
+        tbl_luas: document.getElementById('tbl_luas') ? document.getElementById('tbl_luas').value : '',
+        tbl_ket: document.getElementById('tbl_ket') ? document.getElementById('tbl_ket').value : ''
     };
-    for (let id of requiredIds) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const val = el.value.trim();
-        if (val === '') {
-            const name = id.startsWith('tbl_') ? 'Tabel Objek Sewa - ' + labels[id] : labels[id];
-            alert('Mohon lengkapi semua data. ' + name + ' tidak boleh kosong.');
-            el.focus();
-            return;
+}
+
+// 3. Fungsi validasi form
+
+function validasiForm() {
+    // 1. Ambil data dari form dan input ke 'formData'
+    formData = DataForm();
+
+    // 2. Form input yang wajib diisi
+    const kolomWajib = Object.keys(labelText);
+
+    // 3. Cek input kosong
+    for (let i = 0; i < kolomWajib.length; i++) {
+        let namaKolom = kolomWajib[i];
+        let nilaiInput = formData[namaKolom];
+        let elemenHTML = document.getElementById(namaKolom);
+
+        // Jika form input kosong
+        if (typeof nilaiInput === 'string' && nilaiInput.trim() === '') {
+            let namaLabel = labelText[namaKolom];
+            alert('Mohon lengkapi semua data. ' + namaLabel + ' tidak boleh kosong.');
+            
+            // Arahkan user ke form input kosong
+            if (elemenHTML) elemenHTML.focus();
+            
+            return false;
         }
     }
 
-    // Validasi besaran sewa tidak negatif
-    if (besaran_sewa < 0) {
-        alert('Besaran sewa tidak boleh negatif.');
+    // 4. Aturan input
+    // Besaran Sewa
+    if (formData.besaran_sewa <= 0) {
+        alert('Besaran sewa tidak boleh nol atau negatif.');
         document.getElementById('besaran_sewa').focus();
-        return;
+        return false;
     }
-
-    // Validasi KIB (A-F, kapital)
-    if (!/^[A-Fa-f]$/.test(tbl_kib)) {
-        alert('KIB harus berupa 1 huruf (A-F) saja.');
-        document.getElementById('tbl_kib').focus();
-        return;
-    }
-    tbl_kib = tbl_kib.toUpperCase();
-
-    // Validasi Kode Barang (angka dan titik)
-    if (tbl_kode_barang && !/^[0-9.]*$/.test(tbl_kode_barang)) {
-        alert('Kode Barang hanya boleh berisi angka dan titik.');
+    // Kode Barang
+    let regexKodeBarang = /^[0-9.]*$/;
+    if (!regexKodeBarang.test(formData.tbl_kode_barang)) {
+        alert('Kode Barang hanya boleh berisi karakter angka dan titik.');
         document.getElementById('tbl_kode_barang').focus();
-        return;
+        return false;
     }
-
-    // Validasi REG (1-4 karakter angka)
-    if (!/^[0-9]{1,4}$/.test(tbl_reg)) {
-        alert('REG hanya boleh berisi 1-4 karakter angka.');
+    // Nomor Reg
+    let regexReg = /^[0-9]{4}$/;
+    if (!regexReg.test(formData.tbl_reg)) {
+        alert('Reg berisi 4 karakter angka.');
         document.getElementById('tbl_reg').focus();
-        return;
+        return false;
     }
-
-    // Validasi Luas (angka saja)
-    if (!/^[0-9]+$/.test(tbl_luas)) {
-        alert('Luas hanya boleh berisi angka.');
+    // Luas
+    let regexLuas = /^[0-9]+$/;
+    if (!regexLuas.test(formData.tbl_luas)) {
+        alert('Luas hanya boleh berisi karakter angka.');
         document.getElementById('tbl_luas').focus();
-        return;
+        return false;
+    }
+    return true;
+}
+
+// 4. Fungsi PIN pembuatan dokumen
+
+function checkPIN() {
+   // Cek validasi form
+    let FormValid = validasiForm();
+    if (FormValid === false) {
+        return; 
     }
 
-    console.log('Validasi berhasil');
-
-    // ===== PROSES DATA =====
-    try {
-        console.log('✓ STEP 4: Memproses data...');
-        
-        nama1_out = nama1.toUpperCase();
-        nama2_out = nama2.toUpperCase();
-        jenis_out = jenis.toLowerCase();
-        
-        function toTitleCase(str) {
-            return str.toLowerCase().split(' ').map(word => 
-                word.charAt(0).toUpperCase() + word.slice(1)
-            ).join(' ');
-        }
-        jabatan_out = toTitleCase(jabatan);
-        status1_out = status1.charAt(0).toUpperCase() + status1.slice(1);
-        
-        // Parse tanggal
-        const now = new Date(tgl);
-        const hariNames = ['minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-        const bulanNames = ['januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        
-        hari = hariNames[now.getDay()]?.toLowerCase() || 'senin';
-        hariLower = hari;
-        tanggal = now.getDate();
-        bulan = bulanNames[now.getMonth()]?.toLowerCase() || 'januari';
-        bulanLower = bulan;
-        tahun = now.getFullYear();
-        
-        console.log('Data yang diproses:', {
-            nama1_out, nama2_out, hari, tanggal, bulan, tahun
-        });
-        
-        // Terbilang
-        terbilang = function(n) {
-            const satuan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
-            if (n < 12) return satuan[n] || '';
-            if (n < 20) return terbilang(n - 10) + ' belas';
-            if (n < 100) return terbilang(Math.floor(n / 10)) + ' puluh' + (n % 10 ? ' ' + terbilang(n % 10) : '');
-            if (n < 200) return 'seratus' + (n - 100 ? ' ' + terbilang(n - 100) : '');
-            if (n < 1000) return terbilang(Math.floor(n / 100)) + ' ratus' + (n % 100 ? ' ' + terbilang(n % 100) : '');
-            if (n < 2000) return 'seribu' + (n - 1000 ? ' ' + terbilang(n - 1000) : '');
-            if (n < 1000000) return terbilang(Math.floor(n / 1000)) + ' ribu' + (n % 1000 ? ' ' + terbilang(n % 1000) : '');
-            if (n < 1000000000) return terbilang(Math.floor(n / 1000000)) + ' juta' + (n % 1000000 ? ' ' + terbilang(n % 1000000) : '');
-            if (n < 1000000000000) return terbilang(Math.floor(n / 1000000000)) + ' miliar' + (n % 1000000000 ? ' ' + terbilang(n % 1000000000) : '');
-            return terbilang(Math.floor(n / 1000000000000)) + ' triliun' + (n % 1000000000000 ? ' ' + terbilang(n % 1000000000000) : '');
-        };
-        
-        console.log('Data siap diproses');
-    } catch (e) {
-        alert('ERROR memproses data: ' + e.message);
-        console.error('Process error:', e);
-        return;
+    // Jika form valid, minta user input PIN
+    const inputPIN = prompt('Masukkan PIN Aset Daerah untuk membuat dokumen:');
+    
+    // Cek apakah PIN benar
+    if (inputPIN === '483704') {
+        generatePDF();
+    } else {
+        alert('PIN salah. Akses ditolak. Mohon masukkan PIN dengan benar.');
     }
+}
 
-    // ===== BUILD DOCUMENT =====
-    try {
-        console.log('Generate PDF');
-        
-        const docContent = [];
+// 5. Fungsi terbilang
+
+function terbilang(n) {
+  
+  const bilangan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
+  
+  if (n < 12) return " " + bilangan[n];
+  if (n < 20) return terbilang(Math.floor(n - 10)) + " belas";
+  if (n < 100) return terbilang(Math.floor(n / 10)) + " puluh" + terbilang(n % 10);
+  if (n < 200) return " seratus" + terbilang(n - 100);
+  if (n < 1000) return terbilang(Math.floor(n / 100)) + " ratus" + terbilang(n % 100);
+  if (n < 2000) return " seribu" + terbilang(n - 1000);
+  if (n < 1000000) return terbilang(Math.floor(n / 1000)) + " ribu" + terbilang(n % 1000);
+  if (n < 1000000000) return terbilang(Math.floor(n / 1000000)) + " juta" + terbilang(n % 1000000);
+  
+  return "";
+}
+
+// 6. Fungsi title case
+
+function ubahKeTitleCase(teks) {
+    let kataKata = teks.toLowerCase().split(' ');
+    for (let i = 0; i < kataKata.length; i++) {
+        kataKata[i] = kataKata[i].charAt(0).toUpperCase() + kataKata[i].slice(1);
+    }
+    return kataKata.join(' ');
+}
+
+// 7. Fungsi generate PDF
+function generatePDF() {
+    // Ambil data yang sudah divalidasi
+    let data = formData;
+    const { nomor, tgl, nama1, jabatan, status1, alamat1, nama2, alamat2, usaha, jenis, besaran_sewa, tbl_nama_perangkat, tbl_kib, tbl_kode_barang, tbl_nama_barang, tbl_reg, tbl_lokasi, tbl_luas, tbl_ket } = data;
+
+    let nama1_out = data.nama1.toUpperCase();
+    let nama2_out = data.nama2.toUpperCase();
+    let jenis_out = data.jenis.toLowerCase();
+    let jabatan_out = ubahKeTitleCase(data.jabatan);
+    let status1_out = data.status1.charAt(0).toUpperCase() + data.status1.slice(1);
+    let waktuSekarang = new Date(data.tgl);
+    let daftarHari = ['minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    let daftarBulan = ['januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    let hari = daftarHari[waktuSekarang.getDay()].toLowerCase();
+    let tanggal = waktuSekarang.getDate();
+    let bulan = daftarBulan[waktuSekarang.getMonth()].toLowerCase();
+    let tahun = waktuSekarang.getFullYear();
+    let nominal_sewa = parseInt(besaran_sewa) || 0;
+    let bayar_120 = Math.round(data.besaran_sewa * 1.2);
+    let bayar_60 = Math.round(data.besaran_sewa * 0.6);
+
+    const docContent = [];
         
         // Header
         docContent.push({ text: 'PERJANJIAN SEWA', style: 'title' });
         docContent.push({ text: 'BARANG MILIK DAERAH BERUPA TANAH MILIK PEMERINTAH KABUPATEN', style: 'subtitle' });
         docContent.push({ text: 'KARANGANYAR YANG DIGUNAKAN UNTUK ' + usaha.toUpperCase(), margin: [0,0,0,10], style: 'subtitle' });
         docContent.push({ text: 'Nomor : ' + nomor, margin: [0,0,0,10], style: 'nomor' });
+       
         // Tanggal
         docContent.push({
-            text: 'Pada hari ini ' + hariLower + ' tanggal ' + terbilang(tanggal) + ' bulan ' + bulanLower + ' tahun ' + terbilang(tahun) + ', bertempat di Kantor Bupati Karanganyar, kami yang bertanda tangan di bawah ini:',
+            text: 'Pada hari ini ' + hari + ' tanggal ' + terbilang(tanggal) + ' bulan ' + bulan + ' tahun ' + terbilang(tahun) + ', bertempat di Kantor Bupati Karanganyar, kami yang bertanda tangan di bawah ini:',
             style: 'bodyText',
             alignment: 'justify'
         });
@@ -214,7 +221,6 @@ function generatePDF() {
             style: 'bodyText',
             alignment: 'justify'
         });
-
 
         // Dasar hukum
         const peraturan = [
@@ -252,7 +258,7 @@ function generatePDF() {
             alignment: 'justify'
         });
 
-        // Page break & BAB I
+        // BAB I
         docContent.push({ text: 'BAB I', margin: [0, 10, 0, 0], style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'OBJEK DAN PEMANFAATAN', style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'Pasal 1', margin: [0, 5, 0, 0], style: 'pasalTitle', alignment: 'center' });
@@ -278,11 +284,11 @@ function generatePDF() {
             }
         });
 
-        // Tabel detail barang - margin kiri sesuai width kolom 1 + spacing
+        // Tabel
         docContent.push({
             table: {
                 headerRows: 1,
-                widths: ['4%', '14%', '4%', '11%', '14%', '5%', '28%', '8%', '8%'],
+                widths: ['4%', '14%', '4%', '11%', '14%', '7%', '26%', '8%', '8%'],
                 body: [
                     [
                         { text: 'No.', style: 'tableHeader' },
@@ -346,15 +352,8 @@ function generatePDF() {
         docContent.push({ text: 'BAB II', margin: [0, 10, 0, 0], style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'BESARAN DAN JANGKA WAKTU SEWA', style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'Pasal 2', margin: [0, 5, 0, 0], style: 'pasalTitle', alignment: 'center' });
-
-        // 1. Hitung variabel pembayaran terlebih dahulu
-        const bayar_120 = Math.round(besaran_sewa * 1.2);
-        const bayar_60 = Math.round(besaran_sewa * 0.6);
-
-        // 2. Masukkan ke dalam format tabel tanpa garis
         docContent.push({
             table: {
-                // Lebar kolom: 'auto' menyesuaikan lebar angka (1), (2), (3), dan '*' mengisi sisa kertas
                 widths: ['auto', '*'],
                 body: [
                     [
@@ -365,9 +364,9 @@ function generatePDF() {
                         { text: '(2)', style: 'clauseNumber' },
                         { text: 'Pembayaran uang sewa sebagaimana dimaksud pada ayat (1) dapat dilakukan dengan 2 (dua) metode pembayaran dengan memperhatikan faktor penyesuai sewa yaitu:', style: 'bodyText', alignment: 'justify' }
                     ],
-                    // Baris khusus untuk poin a dan b (nested table)
+
                     [
-                        { text: '' }, // Kolom angka dikosongkan agar menjorok ke dalam
+                        { text: '' },
                         {
                             table: {
                                 widths: ['auto', '*'],
@@ -405,7 +404,7 @@ function generatePDF() {
                         { text: 'Uang sewa wajib dibayarkan selambat\u2011lambatnya:', style: 'bodyText', alignment: 'justify' }
                     ],
                     [
-                        { text: '' }, // Kolom angka dikosongkan agar menjorok ke dalam
+                        { text: '' }, 
                         {
                             table: {
                                 widths: ['auto', '*'],
@@ -518,7 +517,7 @@ function generatePDF() {
             }
         });
 
-        // BAB III - Hak & Kewajiban
+        // BAB III
         docContent.push({ text: 'BAB III', margin: [0, 10, 0, 0], style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'Bagian Kesatu', margin: [0, 5, 0, 0], style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'Hak dan Kewajiban PIHAK KESATU', style: 'babTitle', alignment: 'center' });
@@ -526,7 +525,6 @@ function generatePDF() {
         
         docContent.push({
             table: {
-                // Lebar kolom: 'auto' menyesuaikan lebar angka (1), (2), (3), dan '*' mengisi sisa kertas
                 widths: ['auto', '*'],
                 body: [
                     [
@@ -652,9 +650,8 @@ function generatePDF() {
                         { text: '(2)', style: 'clauseNumber' },
                         { text: 'PIHAK KEDUA berkewajiban untuk ', style: 'bodyText', alignment: 'justify' }
                     ],
-                    // Baris khusus untuk poin a dan b (nested table)
                     [
-                        { text: '' }, // Kolom angka dikosongkan agar menjorok ke dalam
+                        { text: '' },
                         {
                             table: {
                                 widths: ['auto', '*'],
@@ -705,7 +702,6 @@ function generatePDF() {
         docContent.push({ text: 'Pasal 6', margin: [0, 5, 0, 0], style: 'pasalTitle', alignment: 'center' });
         docContent.push({
             table: {
-                // Lebar kolom: 'auto' menyesuaikan lebar angka (1), (2), (3), dan '*' mengisi sisa kertas
                 widths: ['auto', '*'],
                 body: [
                     [
@@ -735,7 +731,6 @@ function generatePDF() {
         });
         docContent.push({
             table: {
-                // Lebar kolom: 'auto' menyesuaikan lebar angka (1), (2), (3), dan '*' mengisi sisa kertas
                 widths: ['auto', '*'],
                 body: [
                     [
@@ -758,7 +753,7 @@ function generatePDF() {
             }
         });
 
-        // ===== BAB V - KEADAAN MEMAKSA =====
+        // BAB V
         docContent.push({ text: 'BAB V', margin: [0, 10, 0, 0], style: 'babTitle', alignment: 'center' });
         docContent.push({ text: ['KEADAAN MEMAKSA (',{ text: 'FORCE MAJEURE', italics: true },')'], style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'Pasal 8', margin: [0, 5, 0, 0], style: 'pasalTitle', alignment: 'center' });
@@ -815,7 +810,7 @@ function generatePDF() {
             }
         });
 
-        // ===== BAB VI - PENYELESAIAN PERSELISIHAN =====
+        // BAB VI
         docContent.push({ text: 'BAB VI', margin: [0, 10, 0, 0], style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'PENYELESAIAN PERSELISIHAN', style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'Pasal 9', margin: [0, 5, 0, 0], style: 'pasalTitle', alignment: 'center' });
@@ -841,7 +836,7 @@ function generatePDF() {
             }
         });
 
-        // ===== BAB VII - PENGAWASAN PELAKSANAAN =====
+        // VII
         docContent.push({ text: 'BAB VII', margin: [0, 10, 0, 0], style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'PENGAWASAN PELAKSANAAN', style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'Pasal 10', margin: [0, 5, 0, 0], style: 'pasalTitle', alignment: 'center' });
@@ -853,7 +848,7 @@ function generatePDF() {
             margin: [0, 0, 0, 5]
         });
 
-        // ===== BAB VIII - LAIN-LAIN =====
+        // BAB VIII
         docContent.push({ text: 'BAB VIII', margin: [0, 10, 0, 0], style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'LAIN-LAIN', style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'Pasal 11', margin: [0, 5, 0, 0], style: 'pasalTitle', alignment: 'center' });
@@ -879,7 +874,7 @@ function generatePDF() {
             }
         });
 
-        // ===== BAB IX - PENUTUP =====
+        // BAB IX
         docContent.push({ text: 'BAB IX', margin: [0, 10, 0, 0], style: 'babTitle', alignment: 'center', pageBreak: 'before' });
         docContent.push({ text: 'PENUTUP', style: 'babTitle', alignment: 'center' });
         docContent.push({ text: 'Pasal 12', margin: [0, 5, 0, 0], style: 'pasalTitle', alignment: 'center' });
@@ -891,7 +886,7 @@ function generatePDF() {
             margin: [0, 0, 0, 5]
         });
 
-        // Daftar Rincian Lembar (a, b, c, d)
+        // Daftar Rincian Lembar Perjanjian
         docContent.push({
             table: {
                 widths: [70, 5, '*'],
@@ -922,7 +917,7 @@ function generatePDF() {
             margin: [0, 0, 0, 40] // Margin bawah sebelum tanda tangan
         });
 
-        // ===== TANDA TANGAN =====
+        // TANDA TANGAN
         docContent.push({
             table: {
                 widths: ['*', '*'],
@@ -944,74 +939,82 @@ function generatePDF() {
             layout: 'noBorders'
         });
 
-        console.log('Dokumen berhasil dibangun (' + docContent.length + ' elements)');
-        
-        // ===== STEP 6: CREATE STYLES =====
-        console.log( 'Membuat styles');
-        
-        const docDefinition = {
-            content: docContent,
-            styles: {
-                title: { fontSize: 12, alignment: 'center' },
-                subtitle: { fontSize: 12, alignment: 'center' },
-                nomor: { fontSize: 12, alignment: 'center' },
-                bodyText: { fontSize: 12, lineHeight: 1, noWrap: false },
-                clauseNumber: { fontSize: 12, alignment: 'left', margin: [0, 0, 6, 0] },
-                tableHeader: { fontSize: 8.5, alignment: 'center' },
-                tableBody: { fontSize: 8.5, alignment: 'center', noWrap: false },
-                babTitle: { fontSize: 12,  alignment: 'center'},
-                pasalTitle: { fontSize: 12, alignment: 'center'}
-            },
-            pageSize: 'A4',
-            pageMargins: [85, 71, 57, 57]  // [3cm, 2.5cm, 2cm, 2cm]
-        };
 
-        console.log('✓Styles ready');
+// 8. Format
+const docDefinition = {
+    content: docContent,
+    styles: {
+        title: { fontSize: 12, alignment: 'center' },
+        subtitle: { fontSize: 12, alignment: 'center' },
+        nomor: { fontSize: 12, alignment: 'center' },
+        bodyText: { fontSize: 12, lineHeight: 1, noWrap: false },
+        clauseNumber: { fontSize: 12, alignment: 'left', margin: [0, 0, 6, 0] },
+        tableHeader: { fontSize: 8.5, alignment: 'center' },
+        tableBody: { fontSize: 8.5, alignment: 'center', noWrap: false },
+        babTitle: { fontSize: 12,  alignment: 'center'},
+        pasalTitle: { fontSize: 12, alignment: 'center'}
+      },
+        pageSize: 'A4',
+        pageMargins: [85, 71, 57, 57]  // [3cm, 2.5cm, 2cm, 2cm]
+    };
+
+// 9. Download
+
         
-        // ===== STEP 7: DOWNLOAD =====
-        console.log('Download PDF');
-        
-        const outputName = 'Perjanjian_Sewa_' + nama2.replace(/\s+/g, '_');
-        pdfMake.createPdf(docDefinition).download(outputName + '.pdf');
-        
-        console.log('========== PDF BERHASIL DIBUAT SEBAGAI: ' + outputName + '.pdf ==========');
-        
-    } catch (e) {
-        alert('ERROR FINAL: ' + e.message);
-        console.error('Download error:', e, e.stack);
-        return;
-    }
+const outputName = 'Perjanjian_Sewa_' + nama2.replace(/\s+/g, '_');
+pdfMake.createPdf(docDefinition).download(outputName + '.pdf');
 }
 
-// Real-time input validation
+// 10. Pengaturan Input
+
+// Blok ini baru akan berjalan setelah semua elemen HTML selesai dimuat di layar
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('PAGE LOADED - input validation ready');
-    
-    const kibInput = document.getElementById('tbl_kib');
-    if (kibInput) {
-        kibInput.addEventListener('input', function() {
+
+    // Memaksa input KIB agar hanya menerima huruf A sampai F
+    let inputKIB = document.getElementById('tbl_kib');
+    if (inputKIB) {
+        inputKIB.addEventListener('input', function() {
+            // Hapus karakter selain A-F dan a-f
             this.value = this.value.replace(/[^A-Fa-f]/g, '').slice(0, 1).toUpperCase();
         });
     }
 
-    const kodeInput = document.getElementById('tbl_kode_barang');
-    if (kodeInput) {
-        kodeInput.addEventListener('input', function() {
+    // Memaksa input Kode Barang agar hanya menerima angka dan titik
+    let inputKode = document.getElementById('tbl_kode_barang');
+    if (inputKode) {
+        inputKode.addEventListener('input', function() {
             this.value = this.value.replace(/[^0-9.]/g, '');
         });
     }
 
-    const regInput = document.getElementById('tbl_reg');
-    if (regInput) {
-        regInput.addEventListener('input', function() {
+    // Memaksa input Nomor REG agar hanya menerima angka
+    let inputReg = document.getElementById('tbl_reg');
+    if (inputReg) {
+        inputReg.addEventListener('input', function() {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
     }
 
-    const luasInput = document.getElementById('tbl_luas');
-    if (luasInput) {
-        luasInput.addEventListener('input', function() {
+    // Memaksa input Luas agar hanya menerima angka
+    let inputLuas = document.getElementById('tbl_luas');
+    if (inputLuas) {
+        inputLuas.addEventListener('input', function() {
             this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    }
+
+    // Mengubah nilai KIB secara otomatis jika dropdown Jenis Barang diubah
+    let inputJenis = document.getElementById('jenis');
+    if (inputJenis && inputKIB) {
+        inputJenis.addEventListener('change', function() {
+            let jenisPilihan = this.value;
+            if (jenisPilihan === 'Tanah') {
+                inputKIB.value = 'A';
+            } else if (jenisPilihan === 'Bangunan') {
+                inputKIB.value = 'C';
+            } else {
+                inputKIB.value = '';
+            }
         });
     }
 });
