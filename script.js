@@ -190,7 +190,7 @@ function generatePDF() {
             text: [
                 { text: 'Nomor : ' },
                 { 
-                    text: nomor.trim() === '' ? '\u00A0'.repeat(40) + '.' : nomor,
+                    text: nomor.trim() === '' ? '\u00A0'.repeat(50) + '.' : nomor,
                     color: nomor.trim() === '' ? 'white' : 'black' 
                 }
             ],
