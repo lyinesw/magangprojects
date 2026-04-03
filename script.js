@@ -184,7 +184,19 @@ function generatePDF() {
         docContent.push({ text: 'PERJANJIAN SEWA', style: 'title' });
         docContent.push({ text: 'BARANG MILIK DAERAH BERUPA TANAH MILIK PEMERINTAH KABUPATEN', style: 'subtitle' });
         docContent.push({ text: 'KARANGANYAR YANG DIGUNAKAN UNTUK ' + usaha.toUpperCase(), margin: [0,0,0,10], style: 'subtitle' });
-        docContent.push({ text: 'Nomor : ' + nomor, margin: [0,0,0,10], style: 'nomor' });
+        
+        // Nomor
+        docContent.push({
+            text: [
+                { text: 'Nomor : ' },
+                { 
+                    text: nomor.trim() === '' ? '\u00A0'.repeat(40) + '.' : nomor,
+                    color: nomor.trim() === '' ? 'white' : 'black' 
+                }
+            ],
+            style: 'nomor', 
+            margin: [0, 0, 0, 10]
+        });
        
         // Tanggal
         docContent.push({
