@@ -5,13 +5,13 @@ let formData = {};
 // nama label untuk setiap input 
 const labelText = {
     tgl: 'Tanggal Perjanjian',
-    usaha: 'Kegiatan Usaha',
     nama1: 'Nama Pihak Kesatu',
     jabatan: 'Jabatan Pihak Kesatu',
+    status1: 'Status Barang',
     alamat1: 'Alamat Instansi Pihak Kesatu',
     nama2: 'Nama Pihak Kedua',
     alamat2: 'Alamat Pihak Kedua',
-    status1: 'Status Barang',
+    usaha: 'Kegiatan Usaha',
     jenis: 'Jenis Barang',
     besaran_sewa: 'Besaran Sewa',
     tbl_nama_perangkat: 'Nama Perangkat',
@@ -94,7 +94,7 @@ function validasiForm() {
     // Nomor Reg
     let regexReg = /^[0-9]{4}$/;
     if (!regexReg.test(formData.tbl_reg)) {
-        alert('Reg berisi 4 karakter angka.');
+        alert('Nomor Register berisi 4 karakter angka.');
         document.getElementById('tbl_reg').focus();
         return false;
     }
