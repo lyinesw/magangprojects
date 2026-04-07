@@ -167,6 +167,11 @@ function generatePDF() {
     let jenis_out = data.jenis.toLowerCase();
     let jabatan_out = ubahKeTitleCase(data.jabatan);
     let status1_out = data.status1.charAt(0).toUpperCase() + data.status1.slice(1);
+    let alamat1_out = ubahKeTitleCase(data.alamat1);
+    let alamat2_out = ubahKeTitleCase(data.alamat2);
+    let tbl_nama_perangkat_out = ubahKeTitleCase(data.tbl_nama_perangkat);
+    let tbl_nama_barang_out = ubahKeTitleCase(data.tbl_nama_barang);
+    let tbl_lokasi_out = ubahKeTitleCase(data.tbl_lokasi);
     let waktuSekarang = new Date(data.tgl);
     let daftarHari = ['minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
     let daftarBulan = ['januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -221,13 +226,13 @@ function generatePDF() {
                         { text: '1.', alignment: 'left' },
                         { text: nama1_out, alignment: 'left' },
                         { text: ' : ', alignment: 'left' },
-                        { text: jabatan_out + ' selaku ' + status1_out + ' Barang Milik Daerah, yang dalam hal ini bertindak untuk dan atas nama Pemerintah Kabupaten Karanganyar yang berkedudukan di ' + alamat1 + ', yang selanjutnya disebut PIHAK KESATU.', alignment: 'justify' }
+                        { text: jabatan_out + ' selaku ' + status1_out + ' Barang Milik Daerah, yang dalam hal ini bertindak untuk dan atas nama Pemerintah Kabupaten Karanganyar yang berkedudukan di ' + alamat1_out + ', yang selanjutnya disebut PIHAK KESATU.', alignment: 'justify' }
                     ],
                     [
                         { text: '2.', alignment: 'left' },
                         { text: nama2_out, alignment: 'left' },
                         { text: ' : ', alignment: 'left' },
-                        { text: 'Penyewa ' + jenis_out + ' yang berkedudukan di ' + alamat2 + ', yang selanjutnya disebut PIHAK KEDUA.', alignment: 'justify' }
+                        { text: 'Penyewa ' + jenis_out + ' yang berkedudukan di ' + alamat2_out + ', yang selanjutnya disebut PIHAK KEDUA.', alignment: 'justify' }
                     ]
                 ]
             },
@@ -310,24 +315,24 @@ function generatePDF() {
                 widths: ['4%', '14%', '4%', '11%', '14%', '7%', '26%', '8%', '8%'],
                 body: [
                     [
-                        { text: 'No.', style: 'tableHeader', alignment: 'left', valign: 'top' },
-                        { text: 'Nama Perangkat Daerah', style: 'tableHeader', alignment: 'left', valign: 'top' },
-                        { text: 'KIB', style: 'tableHeader', alignment: 'left', valign: 'top' },
-                        { text: 'Kode Barang', style: 'tableHeader', alignment: 'left', valign: 'top' },
-                        { text: 'Nama Barang', style: 'tableHeader', alignment: 'left', valign: 'top' },
-                        { text: 'Reg', style: 'tableHeader', alignment: 'left', valign: 'top' },
-                        { text: 'Lokasi', style: 'tableHeader', alignment: 'left', valign: 'top' },
-                        { text: 'Luas (m²)', style: 'tableHeader', alignment: 'left', valign: 'top' },
-                        { text: 'Ket.', style: 'tableHeader', alignment: 'left', valign: 'top' }
+                        { text: 'No.', style: 'tableHeader', valign: 'top' },
+                        { text: 'Nama Perangkat Daerah', style: 'tableHeader', valign: 'top' },
+                        { text: 'KIB', style: 'tableHeader', valign: 'top' },
+                        { text: 'Kode Barang', style: 'tableHeader', valign: 'top' },
+                        { text: 'Nama Barang', style: 'tableHeader', valign: 'top' },
+                        { text: 'Reg', style: 'tableHeader', valign: 'top' },
+                        { text: 'Lokasi', style: 'tableHeader', valign: 'top' },
+                        { text: 'Luas (m²)', style: 'tableHeader', valign: 'top' },
+                        { text: 'Ket.', style: 'tableHeader', valign: 'top' }
                     ],
                     [
                         { text: '1', style: 'tableBody', valign: 'top' },
-                        { text: tbl_nama_perangkat, style: 'tableBody', alignment: 'left', valign: 'top' },
+                        { text: tbl_nama_perangkat_out, style: 'tableBody', alignment: 'left', valign: 'top' },
                         { text: tbl_kib, style: 'tableBody', valign: 'top' },
                         { text: tbl_kode_barang, style: 'tableBody', alignment: 'left', valign: 'top' },
-                        { text: tbl_nama_barang, style: 'tableBody', alignment: 'left', valign: 'top' },
+                        { text: tbl_nama_barang_out, style: 'tableBody', alignment: 'left', valign: 'top' },
                         { text: tbl_reg, style: 'tableBody', valign: 'top' },
-                        { text: tbl_lokasi, style: 'tableBody', alignment: 'left', valign: 'top' },
+                        { text: tbl_lokasi_out, style: 'tableBody', alignment: 'left', valign: 'top' },
                         { text: tbl_luas, style: 'tableBody', valign: 'top' },
                         { text: tbl_ket, style: 'tableBody', valign: 'top' }
                     ]
