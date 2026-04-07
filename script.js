@@ -181,9 +181,9 @@ function generatePDF() {
     let bayar_120_angka = Math.round(nominal_sewa_angka * 1.2);
     let bayar_60_angka = Math.round(nominal_sewa_angka * 0.6);
     // Teks yang sudah diformat dengan titik untuk ditampilkan di PDF
-    let nominal_sewa_format = nominal_sewa_angka.toLocaleString('id-ID');
-    let bayar_120_format = bayar_120_angka.toLocaleString('id-ID');
-    let bayar_60_format = bayar_60_angka.toLocaleString('id-ID');
+    let nominal_sewa_format = nominal_sewa_angka.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    let bayar_120_format = bayar_120_angka.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    let bayar_60_format = bayar_60_angka.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     const docContent = [];
         
@@ -396,7 +396,7 @@ function generatePDF() {
                                     ],
                                     [
                                         { text: 'b.', style: 'bodyText' },
-                                        { text: 'Sebesar 120% (seratus dua puluh persen) yakni Rp ' + bayar_120_format + ',- (' + terbilang(bayar_120_angka) + ' rupiah) ' + 'untuk metode pembayaran bertahap, dengan komitmen pembayaran tahunan masing\u2011masing sebesar Rp ' + bayar_60.toLocaleString('id-ID') + ',- (' + terbilang(bayar_60) + ' rupiah), ' + 'yang tidak mengubah kedudukan hukum bahwa sewa dilakukan untuk masa 2 (dua) tahun sebagaimana dimaksud dalam Pasal 2 ayat (1).', style: 'bodyText', alignment: 'justify' }
+                                        { text: 'Sebesar 120% (seratus dua puluh persen) yakni Rp ' + bayar_120_format + ',- (' + terbilang(bayar_120_angka) + ' rupiah) ' + 'untuk metode pembayaran bertahap, dengan komitmen pembayaran tahunan masing\u2011masing sebesar Rp ' + bayar_60_format + ',- (' + terbilang(bayar_60_angka) + ' rupiah), ' + 'yang tidak mengubah kedudukan hukum bahwa sewa dilakukan untuk masa 2 (dua) tahun sebagaimana dimaksud dalam Pasal 2 ayat (1).', style: 'bodyText', alignment: 'justify' }
                                     ]
                                 ]
                             },
