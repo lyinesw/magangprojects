@@ -310,24 +310,24 @@ function generatePDF() {
                 widths: ['4%', '14%', '4%', '11%', '14%', '7%', '26%', '8%', '8%'],
                 body: [
                     [
-                        { text: 'No.', style: 'tableHeader' },
-                        { text: 'Nama Perangkat', style: 'tableHeader' },
-                        { text: 'KIB', style: 'tableHeader' },
-                        { text: 'Kode Barang', style: 'tableHeader' },
-                        { text: 'Nama Barang', style: 'tableHeader' },
-                        { text: 'Reg', style: 'tableHeader' },
-                        { text: 'Lokasi', style: 'tableHeader' },
-                        { text: 'Luas (m²)', style: 'tableHeader' },
-                        { text: 'Ket.', style: 'tableHeader' }
+                        { text: 'No.', style: 'tableHeader', valign: 'top' },
+                        { text: 'Nama Perangkat Daerah', style: 'tableHeader', valign: 'top' },
+                        { text: 'KIB', style: 'tableHeader', valign: 'top' },
+                        { text: 'Kode Barang', style: 'tableHeader', valign: 'top' },
+                        { text: 'Nama Barang', style: 'tableHeader', valign: 'top' },
+                        { text: 'Reg', style: 'tableHeader', valign: 'top' },
+                        { text: 'Lokasi', style: 'tableHeader', valign: 'top' },
+                        { text: 'Luas (m²)', style: 'tableHeader', valign: 'top' },
+                        { text: 'Ket.', style: 'tableHeader', valign: 'top' }
                     ],
                     [
                         { text: '1', style: 'tableBody' },
-                        { text: tbl_nama_perangkat, style: 'tableBody' },
+                        { text: tbl_nama_perangkat, style: 'tableBody', alignment: 'left' },
                         { text: tbl_kib, style: 'tableBody' },
-                        { text: tbl_kode_barang, style: 'tableBody'},
-                        { text: tbl_nama_barang, style: 'tableBody'},
+                        { text: tbl_kode_barang, style: 'tableBody', alignment: 'left' },
+                        { text: tbl_nama_barang, style: 'tableBody', alignment: 'left' },
                         { text: tbl_reg, style: 'tableBody' },
-                        { text: tbl_lokasi, style: 'tableBody'},
+                        { text: tbl_lokasi, style: 'tableBody', alignment: 'left' },
                         { text: tbl_luas, style: 'tableBody' },
                         { text: tbl_ket, style: 'tableBody' }
                     ]
