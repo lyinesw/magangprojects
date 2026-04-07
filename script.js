@@ -133,7 +133,7 @@ function login() {
         document.getElementById('main-form').classList.remove('hidden');
         document.getElementById('nomor')?.focus();
     } else {
-        alert('PIN salah. Akses ditolak. Mohon masukkan PIN dengan benar.');
+        alert('Kode akes salah. Mohon masukkan kode akses dengan benar.');
         document.getElementById('login_pin').focus();
     }
 }
