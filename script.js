@@ -253,7 +253,7 @@ function generatePDF() {
 
         let peraturanTableBody = peraturan.map((item, idx) => [
             { text: (idx + 1) + '.  ', alignment: 'left' },
-            { text: item, alignment: 'justify', margin: [4, 0, 0, 0] }
+            { text: item, margin: [4, 0, 0, 0] }
         ]);
 
         docContent.push({
@@ -324,10 +324,10 @@ function generatePDF() {
                         { text: '1', style: 'tableBody' },
                         { text: tbl_nama_perangkat, style: 'tableBody' },
                         { text: tbl_kib, style: 'tableBody' },
-                        { text: tbl_kode_barang, style: 'tableBody', fontSize: 7 },
-                        { text: tbl_nama_barang, style: 'tableBody', fontSize: 7 },
+                        { text: tbl_kode_barang, style: 'tableBody'},
+                        { text: tbl_nama_barang, style: 'tableBody'},
                         { text: tbl_reg, style: 'tableBody' },
-                        { text: tbl_lokasi, style: 'tableBody', fontSize: 7 },
+                        { text: tbl_lokasi, style: 'tableBody'},
                         { text: tbl_luas, style: 'tableBody' },
                         { text: tbl_ket, style: 'tableBody' }
                     ]
