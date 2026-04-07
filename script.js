@@ -78,6 +78,19 @@ function validasiForm() {
     }
 
     // 4. Aturan input
+    // Nama Pihak hanya boleh huruf dan spasi
+    let regexNamaPihak = /^[\p{L}\s]+$/u;
+    if (!regexNamaPihak.test(formData.nama1)) {
+        alert('Nama Pihak Kesatu hanya boleh berisi huruf dan spasi.');
+        document.getElementById('nama1').focus();
+        return false;
+    }
+    if (!regexNamaPihak.test(formData.nama2)) {
+        alert('Nama Pihak Kedua hanya boleh berisi huruf dan spasi.');
+        document.getElementById('nama2').focus();
+        return false;
+    }
+
     // Besaran Sewa
     if (formData.besaran_sewa <= 0) {
         alert('Besaran sewa tidak boleh nol atau negatif.');
@@ -110,21 +123,18 @@ function validasiForm() {
 
 // 4. Fungsi PIN pembuatan dokumen
 
-function checkPIN() {
-   // Cek validasi form
-    let FormValid = validasiForm();
-    if (FormValid === false) {
-        return; 
-    }
+const LOGIN_PIN = '483704';
 
-    // Jika form valid, minta user input PIN
-    const inputPIN = prompt('Masukkan PIN Aset Daerah untuk membuat dokumen:');
-    
-    // Cek apakah PIN benar
-    if (inputPIN === '483704') {
-        generatePDF();
+function login() {
+    const inputPIN = document.getElementById('login_pin').value.trim();
+
+    if (inputPIN === LOGIN_PIN) {
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('main-form').classList.remove('hidden');
+        document.getElementById('nomor')?.focus();
     } else {
         alert('PIN salah. Akses ditolak. Mohon masukkan PIN dengan benar.');
+        document.getElementById('login_pin').focus();
     }
 }
 
@@ -141,7 +151,9 @@ function terbilang(n) {
   if (n < 1000) return terbilang(Math.floor(n / 100)) + " ratus " + terbilang(n % 100);
   if (n < 2000) return "seribu " + terbilang(n - 1000);
   if (n < 1000000) return terbilang(Math.floor(n / 1000)) + " ribu" + (n % 1000 > 0 ? " " + terbilang(n % 1000) : "");
-  if (n < 1000000000) return terbilang(Math.floor(n / 1000000)) + " juta" + (n % 1000000000 > 0 ? " " + terbilang(n % 1000000) : "");
+  if (n < 1000000000) return terbilang(Math.floor(n / 1000000)) + " juta" + (n % 1000000 > 0 ? " " + terbilang(n % 1000000) : "");
+  if (n < 1000000000000) return terbilang(Math.floor(n / 1000000000)) + " miliar" + (n % 1000000000 > 0 ? " " + terbilang(n % 1000000000) : "");
+  if (n < 1000000000000000) return terbilang(Math.floor(n / 1000000000000)) + " triliun" + (n % 1000000000000 > 0 ? " " + terbilang(n % 1000000000000) : "");
   
   return "";
 }
@@ -158,6 +170,10 @@ function ubahKeTitleCase(teks) {
 
 // 7. Fungsi generate PDF
 function generatePDF() {
+    if (!validasiForm()) {
+        return;
+    }
+
     // Ambil data yang sudah divalidasi
     let data = formData;
     const { nomor, tgl, nama1, jabatan, status1, alamat1, nama2, alamat2, usaha, jenis, besaran_sewa, tbl_nama_perangkat, tbl_kib, tbl_kode_barang, tbl_nama_barang, tbl_reg, tbl_lokasi, tbl_luas, tbl_ket } = data;
@@ -257,8 +273,8 @@ function generatePDF() {
         ];
 
         let peraturanTableBody = peraturan.map((item, idx) => [
-            { text: (idx + 1) + '.  ', alignment: 'left' },
-            { text: item, margin: [4, 0, 0, 0] }
+            { text: (idx + 1) + '.  ', alignment: 'left', style: 'bodyText' },
+            { text: item, style: 'bodyText', alignment: 'justify', margin: [4, 0, 0, 0] }
         ]);
 
         docContent.push({
@@ -971,7 +987,7 @@ const docDefinition = {
         title: { fontSize: 12, alignment: 'center' },
         subtitle: { fontSize: 12, alignment: 'center' },
         nomor: { fontSize: 12, alignment: 'center' },
-        bodyText: { fontSize: 12, lineHeight: 1, noWrap: false },
+        bodyText: { fontSize: 12, lineHeight: 1, noWrap: false, alignment: 'justify' },
         clauseNumber: { fontSize: 12, alignment: 'left', margin: [0, 0, 6, 0] },
         tableHeader: { fontSize: 8.5, alignment: 'center' },
         tableBody: { fontSize: 8.5, alignment: 'center', noWrap: false },
@@ -1019,26 +1035,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Memaksa input Luas agar hanya menerima angka
-    let inputLuas = document.getElementById('tbl_luas');
-    if (inputLuas) {
-        inputLuas.addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
-    }
-
-    // Mengubah nilai KIB secara otomatis jika dropdown Jenis Barang diubah
-    let inputJenis = document.getElementById('jenis');
-    if (inputJenis && inputKIB) {
-        inputJenis.addEventListener('change', function() {
-            let jenisPilihan = this.value;
-            if (jenisPilihan === 'Tanah') {
-                inputKIB.value = 'A';
-            } else if (jenisPilihan === 'Bangunan') {
-                inputKIB.value = 'C';
-            } else {
-                inputKIB.value = '';
-            }
-        });
-    }
-});
+    // Memaksa input Nama Pihak hanya huruf/spasi
+    let inputNama1 = document.getElementById('nama1');
+    if (inputNama1) {
+        inputNama1.addEventListener('input', function() {
+            this.value = this.value.replace(/[^
