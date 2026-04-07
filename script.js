@@ -377,7 +377,7 @@ function generatePDF() {
                 body: [
                     [
                         { text: '(1)', style: 'clauseNumber' },
-                        { text: 'Besaran uang sewa ' + jenis_out + ' sebagaimana dimaksud dalam Pasal 1 ayat (1) disepakati sebesar Rp ' + nominal_sewa_format + ',- (' + terbilang(nominal_sewa_angka) + ' rupiah) dengan jangka waktu 2 (dua) tahun.', style: 'bodyText', alignment: 'justify' }
+                        { text: 'Besaran uang sewa ' + jenis_out + ' sebagaimana dimaksud dalam Pasal 1 ayat (1) disepakati sebesar Rp ' + nominal_sewa_format + ',- (' + terbilang(nominal_sewa_angka) + ' koma nol nol rupiah) dengan jangka waktu 2 (dua) tahun.', style: 'bodyText', alignment: 'justify' }
                     ],
                     [
                         { text: '(2)', style: 'clauseNumber' },
@@ -392,11 +392,11 @@ function generatePDF() {
                                 body: [
                                     [
                                         { text: 'a.', style: 'bodyText' },
-                                        { text: 'Sebesar 100% (seratus persen) untuk pembayaran sewa yang dilakukan sekaligus atau Rp ' + nominal_sewa_format + ',- (' + terbilang(nominal_sewa_angka) + ' rupiah); atau', style: 'bodyText', alignment: 'justify' }
+                                        { text: 'Sebesar 100% (seratus persen) untuk pembayaran sewa yang dilakukan sekaligus atau Rp ' + nominal_sewa_format + ',- (' + terbilang(nominal_sewa_angka) + ' koma nol nol rupiah); atau', style: 'bodyText', alignment: 'justify' }
                                     ],
                                     [
                                         { text: 'b.', style: 'bodyText' },
-                                        { text: 'Sebesar 120% (seratus dua puluh persen) yakni Rp ' + bayar_120_format + ',- (' + terbilang(bayar_120_angka) + ' rupiah) ' + 'untuk metode pembayaran bertahap, dengan komitmen pembayaran tahunan masing\u2011masing sebesar Rp ' + bayar_60_format + ',- (' + terbilang(bayar_60_angka) + ' rupiah), ' + 'yang tidak mengubah kedudukan hukum bahwa sewa dilakukan untuk masa 2 (dua) tahun sebagaimana dimaksud dalam Pasal 2 ayat (1).', style: 'bodyText', alignment: 'justify' }
+                                        { text: 'Sebesar 120% (seratus dua puluh persen) yakni Rp ' + bayar_120_format + ',- (' + terbilang(bayar_120_angka) + ' koma nol nol rupiah) ' + 'untuk metode pembayaran bertahap, dengan komitmen pembayaran tahunan masing\u2011masing sebesar Rp ' + bayar_60_format + ',- (' + terbilang(bayar_60_angka) + ' koma nol nol rupiah), ' + 'yang tidak mengubah kedudukan hukum bahwa sewa dilakukan untuk masa 2 (dua) tahun sebagaimana dimaksud dalam Pasal 2 ayat (1).', style: 'bodyText', alignment: 'justify' }
                                     ]
                                 ]
                             },
