@@ -174,11 +174,16 @@ function generatePDF() {
     let tanggal = waktuSekarang.getDate();
     let bulan = daftarBulan[waktuSekarang.getMonth()].toLowerCase();
     let tahun = waktuSekarang.getFullYear();
+
     let angka = data.besaran_sewa.toString().replace(/[^0-9]/g, '');
+    // Angka murni untuk perhitungan matematika dan terbilang
     let nominal_sewa_angka = parseInt(angka) || 0;
-    let nominal_sewa = nominal_sewa_angka.toLocaleString('id-ID');
-    let bayar_120 = Math.round(data.besaran_sewa * 1.2);
-    let bayar_60 = Math.round(data.besaran_sewa * 0.6);
+    let bayar_120_angka = Math.round(nominal_sewa_angka * 1.2);
+    let bayar_60_angka = Math.round(nominal_sewa_angka * 0.6);
+    // Teks yang sudah diformat dengan titik untuk ditampilkan di PDF
+    let nominal_sewa_format = nominal_sewa_angka.toLocaleString('id-ID');
+    let bayar_120_format = bayar_120_angka.toLocaleString('id-ID');
+    let bayar_60_format = bayar_60_angka.toLocaleString('id-ID');
 
     const docContent = [];
         
@@ -372,7 +377,7 @@ function generatePDF() {
                 body: [
                     [
                         { text: '(1)', style: 'clauseNumber' },
-                        { text: 'Besaran uang sewa ' + jenis_out + ' sebagaimana dimaksud dalam Pasal 1 ayat (1) disepakati sebesar Rp ' + besaran_sewa.toLocaleString('id-ID') + ',- (' + terbilang(besaran_sewa) + ' rupiah) dengan jangka waktu 2 (dua) tahun.', style: 'bodyText', alignment: 'justify' }
+                        { text: 'Besaran uang sewa ' + jenis_out + ' sebagaimana dimaksud dalam Pasal 1 ayat (1) disepakati sebesar Rp ' + nominal_sewa_format + ',- (' + terbilang(nominal_sewa_angka) + ' rupiah) dengan jangka waktu 2 (dua) tahun.', style: 'bodyText', alignment: 'justify' }
                     ],
                     [
                         { text: '(2)', style: 'clauseNumber' },
@@ -387,11 +392,11 @@ function generatePDF() {
                                 body: [
                                     [
                                         { text: 'a.', style: 'bodyText' },
-                                        { text: 'Sebesar 100% (seratus persen) untuk pembayaran sewa yang dilakukan sekaligus atau Rp ' + besaran_sewa.toLocaleString('id-ID') + ',- (' + terbilang(besaran_sewa) + ' rupiah); atau', style: 'bodyText', alignment: 'justify' }
+                                        { text: 'Sebesar 100% (seratus persen) untuk pembayaran sewa yang dilakukan sekaligus atau Rp ' + nominal_sewa_format + ',- (' + terbilang(nominal_sewa_angka) + ' rupiah); atau', style: 'bodyText', alignment: 'justify' }
                                     ],
                                     [
                                         { text: 'b.', style: 'bodyText' },
-                                        { text: 'Sebesar 120% (seratus dua puluh persen) yakni Rp ' + bayar_120.toLocaleString('id-ID') + ',- (' + terbilang(bayar_120) + ' rupiah) ' + 'untuk metode pembayaran bertahap, dengan komitmen pembayaran tahunan masing\u2011masing sebesar Rp ' + bayar_60.toLocaleString('id-ID') + ',- (' + terbilang(bayar_60) + ' rupiah), ' + 'yang tidak mengubah kedudukan hukum bahwa sewa dilakukan untuk masa 2 (dua) tahun sebagaimana dimaksud dalam Pasal 2 ayat (1).', style: 'bodyText', alignment: 'justify' }
+                                        { text: 'Sebesar 120% (seratus dua puluh persen) yakni Rp ' + bayar_120_format + ',- (' + terbilang(bayar_120_angka) + ' rupiah) ' + 'untuk metode pembayaran bertahap, dengan komitmen pembayaran tahunan masing\u2011masing sebesar Rp ' + bayar_60.toLocaleString('id-ID') + ',- (' + terbilang(bayar_60) + ' rupiah), ' + 'yang tidak mengubah kedudukan hukum bahwa sewa dilakukan untuk masa 2 (dua) tahun sebagaimana dimaksud dalam Pasal 2 ayat (1).', style: 'bodyText', alignment: 'justify' }
                                     ]
                                 ]
                             },
