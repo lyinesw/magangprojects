@@ -19,8 +19,8 @@
 <div id="login-screen" class="login-screen">
     <div class="login-box">
         <h3>Masukkan Kode Akses Bidang Aset Daerah BKD Kabupaten Karanganyar</h3>
-        <input type="password" id="login_pin" placeholder="Masukkan Kode Akses">
-        <button type="button" onclick="login()">Masuk</button>
+        <input type="password" id="login_pin" placeholder="Masukkan Kode Akses" onkeypress="if(event.key==='Enter') login()">
+        <button type="button" id="loginBtn" onclick="login()">Masuk</button>
     </div>
 </div>
 
