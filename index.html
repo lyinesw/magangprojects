@@ -16,7 +16,15 @@
   Berupa Tanah dan Bangunan
 </h2>
 
-<div class="form-container">
+<div id="login-screen" class="login-screen">
+    <div class="login-box">
+        <h3>Masukkan Kode Akses Bidang Aset Daerah BKD Kabupaten Karanganyar</h3>
+        <input type="password" id="login_pin" placeholder="Masukkan Kode Akses">
+        <button type="button" onclick="login()">Masuk</button>
+    </div>
+</div>
+
+<div class="form-container hidden" id="main-form">
     <!-- BAGIAN 1: NOMOR DAN TANGGAL -->
     <div class="form-section">
         <h3>1. Informasi Dasar</h3>
@@ -107,7 +115,7 @@ Karanganyar, Gedung BKD" style="width:95%; padding:3px; height:60px; resize:none
         </div>
     </div>
 
-    <button onclick="checkPIN()">Buat Dokumen (PDF)</button>
+    <button onclick="generatePDF()">Buat Dokumen (PDF)</button>
 </div>
 
 <script src="script.js"></script>
