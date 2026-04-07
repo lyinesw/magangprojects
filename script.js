@@ -710,7 +710,7 @@ function generatePDF() {
                                     ],
                                     [
                                         { text: 'd.', style: 'bodyText' },
-                                        { text: 'PIHAK KEDUA wajib menyerahkan kembali tanah dalam keadaan bersih, bebas dari pihak ketiga, tanpa bangunan atau tanaman yang menghalangi pemanfaatan, kecuali disetujui tertulis oleh PIHAK KESATU setelah jangka waktu sewa berakhir atau jika sewaktu\u2011waktu diperlukan PIHAK KESATU sebagaimana diatur dalam Pasal 3 ayat (1) huruf c.', style: 'bodyText', alignment: 'justify' }
+                                        { text: 'PIHAK KEDUA wajib menyerahkan kembali ' + jenis_out + ' dalam keadaan bersih, bebas dari pihak ketiga, tanpa bangunan atau tanaman yang menghalangi pemanfaatan, kecuali disetujui tertulis oleh PIHAK KESATU setelah jangka waktu sewa berakhir atau jika sewaktu\u2011waktu diperlukan PIHAK KESATU sebagaimana diatur dalam Pasal 3 ayat (1) huruf c.', style: 'bodyText', alignment: 'justify' }
                                     ]
                                 ]
                             },
