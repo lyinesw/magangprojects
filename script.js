@@ -1010,6 +1010,12 @@ pdfMake.createPdf(docDefinition).download(outputName + '.pdf');
 // Blok ini baru akan berjalan setelah semua elemen HTML selesai dimuat di layar
 document.addEventListener('DOMContentLoaded', function() {
 
+    // Login button handler - attach event listener untuk memastikan berfungsi di Vercel
+    const loginBtn = document.getElementById('loginBtn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', login);
+    }
+
     // Memaksa input KIB agar hanya menerima huruf A sampai F
     let inputKIB = document.getElementById('tbl_kib');
     if (inputKIB) {
