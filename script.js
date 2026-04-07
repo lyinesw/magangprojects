@@ -175,7 +175,8 @@ function generatePDF() {
     let bulan = daftarBulan[waktuSekarang.getMonth()].toLowerCase();
     let tahun = waktuSekarang.getFullYear();
     let angka = data.besaran_sewa.toString().replace(/[^0-9]/g, '');
-    let nominal_sewa = parseInt(angka) || 0;
+    let nominal_sewa_angka = parseInt(angka) || 0;
+    let nominal_sewa = nominal_sewa_angka.toLocaleString('id-ID');
     let bayar_120 = Math.round(data.besaran_sewa * 1.2);
     let bayar_60 = Math.round(data.besaran_sewa * 0.6);
 
