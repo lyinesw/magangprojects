@@ -79,7 +79,7 @@ function validasiForm() {
 
     // 4. Aturan input
     // Nama Pihak hanya boleh huruf dan spasi
-    let regexNamaPihak = /^[\p{L}\s]+$/u;
+    let regexNamaPihak = /^[a-zA-Z\s]+$/;
     if (!regexNamaPihak.test(formData.nama1)) {
         alert('Nama Pihak Kesatu hanya boleh berisi huruf dan spasi.');
         document.getElementById('nama1').focus();
@@ -1041,8 +1041,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Memaksa input Luas agar hanya menerima angka
+    let inputLuas = document.getElementById('tbl_luas');
+    if (inputLuas) {
+        inputLuas.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    }
+
     // Memaksa input Nama Pihak hanya huruf/spasi
     let inputNama1 = document.getElementById('nama1');
     if (inputNama1) {
         inputNama1.addEventListener('input', function() {
-            this.value = this.value.replace(/[^
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+        });
+    }
+    let inputNama2 = document.getElementById('nama2');
+    if (inputNama2) {
+        inputNama2.addEventListener('input', function() {
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+        });
+    }
+
+    // Mengubah nilai KIB secara otomatis jika dropdown Jenis Barang diubah
+    let inputJenis = document.getElementById('jenis');
+    if (inputJenis && inputKIB) {
+        inputJenis.addEventListener('change', function() {
+            let jenisPilihan = this.value;
+            if (jenisPilihan === 'Tanah') {
+                inputKIB.value = 'A';
+            } else if (jenisPilihan === 'Bangunan') {
+                inputKIB.value = 'C';
+            } else {
+                inputKIB.value = '';
+            }
+        });
+    }
+});
