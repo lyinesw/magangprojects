@@ -123,6 +123,44 @@ button:hover {
     background-color: #19639a;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.login-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #d7dee6;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(15, 38, 70, 0.08);
+    margin-bottom: 22px;
+    padding: 24px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 380px;
+}
+
+.login-box h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #1f4f83;
+}
+
+.login-box input {
+    margin-bottom: 14px;
+}
+
+.login-box button {
+    width: 100%;
+}
+
 @media print {
     body,
     h2,
