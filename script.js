@@ -134,12 +134,12 @@ function terbilang(n) {
   
   const bilangan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
   
-  if (n < 12) return " " + bilangan[n];
+  if (n < 12) return bilangan[n];
   if (n < 20) return terbilang(Math.floor(n - 10)) + " belas";
   if (n < 100) return terbilang(Math.floor(n / 10)) + " puluh" + terbilang(n % 10);
-  if (n < 200) return " seratus" + terbilang(n - 100);
+  if (n < 200) return "seratus" + terbilang(n - 100);
   if (n < 1000) return terbilang(Math.floor(n / 100)) + " ratus" + terbilang(n % 100);
-  if (n < 2000) return " seribu" + terbilang(n - 1000);
+  if (n < 2000) return "seribu" + terbilang(n - 1000);
   if (n < 1000000) return terbilang(Math.floor(n / 1000)) + " ribu" + terbilang(n % 1000);
   if (n < 1000000000) return terbilang(Math.floor(n / 1000000)) + " juta" + terbilang(n % 1000000);
   
@@ -377,7 +377,7 @@ function generatePDF() {
                 body: [
                     [
                         { text: '(1)', style: 'clauseNumber' },
-                        { text: 'Besaran uang sewa ' + jenis_out + ' sebagaimana dimaksud dalam Pasal 1 ayat (1) disepakati sebesar Rp ' + nominal_sewa_format + ',- ('+terbilang(nominal_sewa_angka) + ' koma nol nol rupiah) dengan jangka waktu 2 (dua) tahun.', style: 'bodyText', alignment: 'justify' }
+                        { text: 'Besaran uang sewa ' + jenis_out + ' sebagaimana dimaksud dalam Pasal 1 ayat (1) disepakati sebesar Rp ' + nominal_sewa_format + ',- (' + terbilang(nominal_sewa_angka) + ' koma nol nol rupiah) dengan jangka waktu 2 (dua) tahun.', style: 'bodyText', alignment: 'justify' }
                     ],
                     [
                         { text: '(2)', style: 'clauseNumber' },
@@ -392,11 +392,11 @@ function generatePDF() {
                                 body: [
                                     [
                                         { text: 'a.', style: 'bodyText' },
-                                        { text: 'Sebesar 100% (seratus persen) untuk pembayaran sewa yang dilakukan sekaligus atau Rp ' + nominal_sewa_format + ',- ('+terbilang(nominal_sewa_angka) + ' koma nol nol rupiah); atau', style: 'bodyText', alignment: 'justify' }
+                                        { text: 'Sebesar 100% (seratus persen) untuk pembayaran sewa yang dilakukan sekaligus atau Rp ' + nominal_sewa_format + ',- (' + terbilang(nominal_sewa_angka) + ' koma nol nol rupiah); atau', style: 'bodyText', alignment: 'justify' }
                                     ],
                                     [
                                         { text: 'b.', style: 'bodyText' },
-                                        { text: 'Sebesar 120% (seratus dua puluh persen) yakni Rp ' + bayar_120_format + ',- ('+terbilang(bayar_120_angka) + ' koma nol nol rupiah) ' + 'untuk metode pembayaran bertahap, dengan komitmen pembayaran tahunan masing\u2011masing sebesar Rp ' + bayar_60_format + ',- ('+terbilang(bayar_60_angka) + ' koma nol nol rupiah), ' + 'yang tidak mengubah kedudukan hukum bahwa sewa dilakukan untuk masa 2 (dua) tahun sebagaimana dimaksud dalam Pasal 2 ayat (1).', style: 'bodyText', alignment: 'justify' }
+                                        { text: 'Sebesar 120% (seratus dua puluh persen) yakni Rp ' + bayar_120_format + ',- (' + terbilang(bayar_120_angka) + ' koma nol nol rupiah) ' + 'untuk metode pembayaran bertahap, dengan komitmen pembayaran tahunan masing\u2011masing sebesar Rp ' + bayar_60_format + ',- (' + terbilang(bayar_60_angka) + ' koma nol nol rupiah), ' + 'yang tidak mengubah kedudukan hukum bahwa sewa dilakukan untuk masa 2 (dua) tahun sebagaimana dimaksud dalam Pasal 2 ayat (1).', style: 'bodyText', alignment: 'justify' }
                                     ]
                                 ]
                             },
