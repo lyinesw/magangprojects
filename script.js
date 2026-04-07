@@ -174,7 +174,8 @@ function generatePDF() {
     let tanggal = waktuSekarang.getDate();
     let bulan = daftarBulan[waktuSekarang.getMonth()].toLowerCase();
     let tahun = waktuSekarang.getFullYear();
-    let nominal_sewa = parseInt(besaran_sewa) || 0;
+    let angka = data.besaran_sewa.toString().replace(/[^0-9]/g, '');
+    let nominal_sewa = parseInt(angka) || 0;
     let bayar_120 = Math.round(data.besaran_sewa * 1.2);
     let bayar_60 = Math.round(data.besaran_sewa * 0.6);
 
@@ -182,7 +183,7 @@ function generatePDF() {
         
         // Header
         docContent.push({ text: 'PERJANJIAN SEWA', style: 'title' });
-        docContent.push({ text: 'BARANG MILIK DAERAH BERUPA ' + jenis_out + ' MILIK PEMERINTAH KABUPATEN', style: 'subtitle' });
+        docContent.push({ text: 'BARANG MILIK DAERAH BERUPA ' + jenis_out.toUpperCase() + ' MILIK PEMERINTAH KABUPATEN', style: 'subtitle' });
         docContent.push({ text: 'KARANGANYAR YANG DIGUNAKAN UNTUK ' + usaha.toUpperCase(), margin: [0,0,0,10], style: 'subtitle' });
         
         // Nomor
